@@ -563,12 +563,12 @@
         </div>
         
         <div class="mt-12 flex flex-col space-y-6">
-            <a href="#about" class="text-xl hover:text-blue-400 transition">關於我們</a>
-            <a href="#championship" class="text-xl hover:text-blue-400 transition">錦標賽結構</a>
-            <a href="#cstl" class="text-xl hover:text-blue-400 transition">CSTL認證</a>
-            <a href="#technology" class="text-xl hover:text-blue-400 transition">技術創新</a>
-            <a href="#partners" class="text-xl hover:text-blue-400 transition">合作夥伴</a>
-            <a href="#news" class="text-xl hover:text-blue-400 transition">最新消息</a>
+            <a href="#about" class="text-xl hover:text-blue-400 transition mobile-menu-link">關於我們</a>
+            <a href="#championship" class="text-xl hover:text-blue-400 transition mobile-menu-link">錦標賽結構</a>
+            <a href="#cstl" class="text-xl hover:text-blue-400 transition mobile-menu-link">CSTL認證</a>
+            <a href="#technology" class="text-xl hover:text-blue-400 transition mobile-menu-link">技術創新</a>
+            <a href="#partners" class="text-xl hover:text-blue-400 transition mobile-menu-link">合作夥伴</a>
+            <a href="#news" class="text-xl hover:text-blue-400 transition mobile-menu-link">最新消息</a>
             
             <div class="pt-6 border-t border-gray-700">
                 <button class="btn-primary w-full py-3 rounded-lg font-medium text-center">
@@ -1554,16 +1554,52 @@
                     const targetId = link.getAttribute('href').substring(1);
                     const targetElement = document.getElementById(targetId);
                     
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                        
-                        // Close mobile menu if open
+                    // Close mobile menu if open
+                    if (mobileMenu.classList.contains('open')) {
                         mobileMenu.classList.remove('open');
                         document.body.style.overflow = 'auto';
+                        
+                        // Wait for menu to close before scrolling
+                        setTimeout(() => {
+                            if (targetElement) {
+                                targetElement.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                            }
+                        }, 300);
+                    } else {
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
                     }
+                });
+            });
+            
+            // Mobile menu links
+            const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    // Close mobile menu
+                    mobileMenu.classList.remove('open');
+                    document.body.style.overflow = 'auto';
+                    
+                    // Wait for menu to close before scrolling
+                    setTimeout(() => {
+                        if (targetElement) {
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }, 300);
                 });
             });
             
