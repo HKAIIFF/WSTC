@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WSTC - 世界滑行技術錦標賽</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Orbitron:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #8e44ad;
+            --accent: #00ff9d;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(52, 152, 219, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(142, 68, 173, 0.1) 0%, transparent 20%);
+        }
+        
+        .logo-font {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 2.5rem;
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+            animation: logoGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes logoGlow {
+            0% { text-shadow: 0 0 10px rgba(0, 255, 157, 0.3); }
+            100% { text-shadow: 0 0 25px rgba(0, 255, 157, 0.6), 0 0 35px rgba(52, 152, 219, 0.4); }
+        }
+        
+        .logo-sub {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-top: -10px;
+            text-align: center;
+            opacity: 0.8;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .accent-bg {
+            background: rgba(0, 255, 157, 0.1);
+            border: 1px solid rgba(0, 255, 157, 0.2);
+        }
+        
+        .card {
+            background-color: rgba(26, 32, 44, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 255, 157, 0.2);
+            border-color: rgba(0, 255, 157, 0.3);
+        }
+        
+        .navbar {
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 157, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
+            border: none;
+            font-weight: 600;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(0, 255, 157, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .hero {
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+        
+        .hero:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 100%);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.7;
+            animation: bgPan 30s infinite linear;
+        }
+        
+        @keyframes bgPan {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in-out forwards;
+            opacity: 0;
+        }
+        
+        .animate-slide-up {
+            animation: slideUp 0.8s ease-in-out forwards;
+            opacity: 0;
+        }
+        
+        .animate-slide-right {
+            animation: slideRight 0.8s ease-in-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideRight {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .data-stream {
+            position: absolute;
+            height: 100px;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--accent), var(--secondary), transparent);
+            z-index: 0;
+            animation: dataStream 2s linear infinite;
+            opacity: 0.3;
+        }
+        
+        @keyframes dataStream {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+        
+        .login-dropdown {
+            display: none;
+            position: absolute;
+            background-color: rgba(26, 32, 44, 0.95);
+            min-width: 280px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 100;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            top: 50px;
+            right: 0;
+            padding: 15px;
+        }
+        
+        .login-container:hover .login-dropdown {
+            display: block;
+        }
+        
+        .login-option {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .login-option:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .login-option i {
+            font-size: 20px;
+            margin-right: 12px;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .login-option span {
+            font-weight: 500;
+        }
+        
+        .login-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin: 15px 0;
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--accent);
+        }
+        
+        .stats-card {
+            text-align: center;
+            padding: 25px;
+            border-radius: 16px;
+            background: rgba(26, 32, 44, 0.5);
+            border: 1px solid rgba(0, 255, 157, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            background: rgba(26, 32, 44, 0.7);
+        }
+        
+        .stats-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        .stats-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .input-field {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .section-title.center:after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .competition-card {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .competition-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 157, 0.25);
+        }
+        
+        .championship-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(26, 32, 44, 0.5);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .championship-table th {
+            background: rgba(52, 152, 219, 0.2);
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .championship-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .championship-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .championship-table tr:hover {
+            background: rgba(0, 255, 157, 0.1);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .logo-font {
+                font-size: 1.8rem;
+            }
+            
+            .hero-bg {
+                animation: none;
+            }
+            
+            .hero {
+                min-height: 80vh;
+            }
+            
+            .section-title:after {
+                width: 40px;
+                bottom: -8px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .championship-table {
+                font-size: 0.85rem;
+            }
+            
+            .championship-table th,
+            .championship-table td {
+                padding: 10px 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 70vh;
+            }
+            
+            .logo-font {
+                font-size: 1.5rem;
+            }
+            
+            .logo-sub {
+                font-size: 0.6rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .championship-table {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Data streams -->
+    <div class="data-stream" style="left: 20%; animation-delay: 0s;"></div>
+    <div class="data-stream" style="left: 40%; animation-delay: 0.5s;"></div>
+    <div class="data-stream" style="left: 60%; animation-delay: 1s;"></div>
+    <div class="data-stream" style="left: 80%; animation-delay: 1.5s;"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar fixed w-full z-50 px-4 py-3">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#home" class="flex flex-col items-center">
+                <div class="logo-font">WSTC</div>
+                <div class="logo-sub">世界滑行技術錦標賽</div>
+            </a>
+            
+            <div class="hidden md:flex space-x-8 desktop-nav">
+                <a href="#about" class="hover:text-blue-400 transition">關於我們</a>
+                <a href="#championship" class="hover:text-blue-400 transition">錦標賽結構</a>
+                <a href="#cstl" class="hover:text-blue-400 transition">CSTL認證</a>
+                <a href="#technology" class="hover:text-blue-400 transition">技術創新</a>
+                <a href="#partners" class="hover:text-blue-400 transition">合作夥伴</a>
+                <a href="#news" class="hover:text-blue-400 transition">最新消息</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <!-- Login Container -->
+                <div class="login-container relative">
+                    <a href="#login" class="btn-primary px-6 py-2 rounded-full text-sm">登入</a>
+                    <div class="login-dropdown">
+                        <h3 class="font-bold text-lg mb-4">登入WSTC帳號</h3>
+                        
+                        <div class="login-option" data-login="google">
+                            <i class="fab fa-google text-red-500"></i>
+                            <span>使用Google登入</span>
+                        </div>
+                        
+                        <div class="login-option" data-login="facebook">
+                            <i class="fab fa-facebook text-blue-600"></i>
+                            <span>使用Facebook登入</span>
+                        </div>
+                        
+                        <div class="login-option" data-login="apple">
+                            <i class="fab fa-apple"></i>
+                            <span>使用Apple登入</span>
+                        </div>
+                        
+                        <div class="login-divider"></div>
+                        
+                        <div class="login-option wallet-option" data-login="metamask">
+                            <i class="fas fa-wallet text-yellow-400"></i>
+                            <span>連接MetaMask錢包</span>
+                        </div>
+                        
+                        <div class="login-option wallet-option" data-login="walletconnect">
+                            <i class="fas fa-plug text-blue-300"></i>
+                            <span>連接WalletConnect</span>
+                        </div>
+                        
+                        <div class="mt-4 text-center text-sm text-gray-400">
+                            登入表示您同意我們的 <a href="#" class="text-blue-400">服務條款</a> 和 <a href="#" class="text-blue-400">隱私政策</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="md:hidden text-white mobile-menu-btn">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-close">
+            <i class="fas fa-times"></i>
+        </div>
+        
+        <div class="mt-12 flex flex-col space-y-6">
+            <a href="#about" class="text-xl hover:text-blue-400 transition">關於我們</a>
+            <a href="#championship" class="text-xl hover:text-blue-400 transition">錦標賽結構</a>
+            <a href="#cstl" class="text-xl hover:text-blue-400 transition">CSTL認證</a>
+            <a href="#technology" class="text-xl hover:text-blue-400 transition">技術創新</a>
+            <a href="#partners" class="text-xl hover:text-blue-400 transition">合作夥伴</a>
+            <a href="#news" class="text-xl hover:text-blue-400 transition">最新消息</a>
+            
+            <div class="pt-6 border-t border-gray-700">
+                <button class="btn-primary w-full py-3 rounded-lg font-medium text-center">
+                    登入帳號
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="container mx-auto px-4 hero-content">
+            <div class="max-w-4xl animate-fade-in">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                    滑雪界的 <span class="gradient-text">一級方程式</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-8">
+                    革命性滑雪競賽，融合傳統競速與先進感測技術，體驗精準與性能交匯的冬季運動未來。
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="#championship" class="btn-primary px-8 py-4 rounded-full font-medium text-center text-lg">
+                        觀看錦標賽
+                    </a>
+                    <a href="#cstl" class="btn-secondary px-8 py-4 rounded-full font-medium text-center text-lg">
+                        加入CSTL計畫
+                    </a>
+                </div>
+                
+                <!-- Hero Stats -->
+                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="stats-card">
+                        <i class="fas fa-trophy"></i>
+                        <div class="number">$500萬</div>
+                        <div class="text-sm">總獎金池</div>
+                    </div>
+                    <div class="stats-card">
+                        <i class="fas fa-users"></i>
+                        <div class="number">5萬+</div>
+                        <div class="text-sm">參賽選手</div>
+                    </div>
+                    <div class="stats-card">
+                        <i class="fas fa-globe"></i>
+                        <div class="number">12</div>
+                        <div class="text-sm">國家參與</div>
+                    </div>
+                    <div class="stats-card">
+                        <i class="fas fa-chart-line"></i>
+                        <div class="number">1億</div>
+                        <div class="text-sm">全球觀眾</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-20" id="about">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-16 section-title center">
+                    關於WSTC
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- World Championship Finals -->
+                    <div class="competition-card card p-8 text-center">
+                        <div class="text-6xl mb-6">
+                            <i class="fas fa-crown text-yellow-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">世界錦標賽總決賽</h3>
+                        <div class="text-3xl font-bold gradient-text mb-2">$500萬</div>
+                        <div class="text-sm text-gray-400 mb-6">總獎金池</div>
+                        <ul class="text-left space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-2"></i>
+                                全球前16名選手
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-2"></i>
+                                冠軍獎金$100萬
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-2"></i>
+                                瑞士達沃斯舉辦
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-2"></i>
+                                每年三月舉行
+                            </li>
+                        </ul>
+                        <button class="btn-primary w-full py-3 rounded-lg">
+                            查看賽程
+                        </button>
+                    </div>
+                    
+                    <!-- Global Tour Series -->
+                    <div class="competition-card card p-8 text-center">
+                        <div class="text-6xl mb-6">
+                            <i class="fas fa-globe text-blue-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">全球巡迴賽</h3>
+                        <div class="text-3xl font-bold gradient-text mb-2">$1200萬</div>
+                        <div class="text-sm text-gray-400 mb-6">賽季總獎金</div>
+                        <ul class="text-left space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-2"></i>
+                                全球6站賽事
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-2"></i>
+                                每站$200萬獎金
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-2"></i>
+                                精英職業巡迴賽
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-2"></i>
+                                1-2月舉行
+                            </li>
+                        </ul>
+                        <button class="btn-secondary w-full py-3 rounded-lg">
+                            巡迴賽程
+                        </button>
+                    </div>
+                    
+                    <!-- Master Series -->
+                    <div class="competition-card card p-8 text-center">
+                        <div class="text-6xl mb-6">
+                            <i class="fas fa-mountain text-purple-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">大師系列賽</h3>
+                        <div class="text-3xl font-bold gradient-text mb-2">$200萬</div>
+                        <div class="text-sm text-gray-400 mb-6">區域資格賽獎金</div>
+                        <ul class="text-left space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-2"></i>
+                                區域資格賽
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-2"></i>
+                                每站$50萬獎金
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-2"></i>
+                                每區域前64名
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-400 mr-2"></i>
+                                12月資格賽
+                            </li>
+                        </ul>
+                        <button class="btn-secondary w-full py-3 rounded-lg">
+                            立即報名
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Championship Structure Section -->
+    <section class="py-20 bg-gradient-to-b from-gray-900 to-black" id="championship">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-16 section-title center">
+                    錦標賽結構
+                </h2>
+                
+                <div class="card p-8 mb-16">
+                    <h3 class="text-3xl font-bold mb-6 gradient-text">職業競賽層級</h3>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="championship-table">
+                            <thead>
+                                <tr>
+                                    <th>賽事層級</th>
+                                    <th>形式</th>
+                                    <th>獎金池</th>
+                                    <th>參賽資格</th>
+                                    <th>舉辦地點</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>世界錦標賽總決賽</td>
+                                    <td>年度巔峰賽事，全球頂尖選手</td>
+                                    <td>$500萬總獎金，冠軍$100萬</td>
+                                    <td>全球排名前16選手</td>
+                                    <td>瑞士達沃斯（固定場館）</td>
+                                </tr>
+                                <tr>
+                                    <td>全球巡迴賽（6站）</td>
+                                    <td>精英職業巡迴賽</td>
+                                    <td>每站$200萬，冠軍$30萬</td>
+                                    <td>每站前32名資格選手</td>
+                                    <td>全球頂級滑雪勝地</td>
+                                </tr>
+                                <tr>
+                                    <td>大師系列賽</td>
+                                    <td>區域資格賽事</td>
+                                    <td>每站$50萬獎金</td>
+                                    <td>每區域前64名選手</td>
+                                    <td>區域頂級滑雪場</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="card p-8">
+                    <h3 class="text-3xl font-bold mb-6 gradient-text">年度競賽日曆</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-gray-800 p-6 rounded-lg">
+                            <h4 class="text-xl font-bold mb-4 text-blue-400">十二月</h4>
+                            <h5 class="font-bold mb-2">大師系列賽區域資格賽</h5>
+                            <ul class="space-y-2 text-gray-300">
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>亞太大師賽（日本/韓國）</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>北美大師賽（美國/加拿大）</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>歐洲大師賽（阿爾卑斯地區）</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>中國大師賽（多個場館）</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-gray-800 p-6 rounded-lg">
+                            <h4 class="text-xl font-bold mb-4 text-blue-400">一月至二月</h4>
+                            <h5 class="font-bold mb-2">全球巡迴賽</h5>
+                            <ul class="space-y-2 text-gray-300">
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>開幕輪：中國張家口（奧運遺產）</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>技術輪：瑞士聖莫里茨</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>創新輪：日本二世谷</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>速度輪：奧地利因斯布魯克</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>風格輪：美國阿斯本</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>冠軍輪：加拿大惠斯勒</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-gray-800 p-6 rounded-lg">
+                            <h4 class="text-xl font-bold mb-4 text-blue-400">三月</h4>
+                            <h5 class="font-bold mb-2">世界錦標賽總決賽</h5>
+                            <ul class="space-y-2 text-gray-300">
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>地點：瑞士達沃斯（固定）</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>形式：5天內三輪淘汰賽</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>全球轉播觀眾目標：1億觀眾</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>頂尖選手對決，決出年度總冠軍</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-xs mt-1 mr-2 text-green-400"></i>
+                                    <span>結合技術與速度的巔峰對決</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CSTL Section -->
+    <section class="py-20" id="cstl">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-16 section-title center">
+                    中國滑雪技術階梯 (CSTL)
+                </h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                    <div class="animate-slide-up">
+                        <h3 class="text-3xl font-bold mb-6">通往錦標賽之路</h3>
+                        <p class="text-gray-300 mb-6 text-lg leading-relaxed">
+                            CSTL認證系統提供從初學者到職業選手的結構化路徑，採用與錦標賽相同的感測技術，
+                            通過六個逐步提升的難度級別實現技能精進。
+                        </p>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="accent-bg p-4 rounded-lg">
+                                <h4 class="font-semibold text-lg mb-2">客觀評估</h4>
+                                <p class="text-gray-300">即時感測回饋消除主觀評判</p>
+                            </div>
+                            
+                            <div class="accent-bg p-4 rounded-lg">
+                                <h4 class="font-semibold text-lg mb-2">全球認可</h4>
+                                <p class="text-gray-300">證書在全球合作度假村通用</p>
+                            </div>
+                            
+                            <div class="accent-bg p-4 rounded-lg">
+                                <h4 class="font-semibold text-lg mb-2">錦標賽通道</h4>
+                                <p class="text-gray-300">直通WSTC職業競賽的清晰路徑</p>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="btn-primary px-6 py-3 rounded-lg font-medium">
+                            開始您的CSTL之旅
+                        </a>
+                    </div>
+                    
+                    <div class="animate-slide-right">
+                        <!-- CSTL Level Progression -->
+                        <div class="space-y-4">
+                            <div class="card p-6 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold mr-4">
+                                        專家
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">專家級</h4>
+                                        <p class="text-sm text-gray-400">職業選手準備</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold">¥5,999</div>
+                                    <div class="text-sm text-gray-400">$850</div>
+                                </div>
+                            </div>
+                            
+                            <div class="card p-6 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center text-white font-bold mr-4">
+                                        L1
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">等級1</h4>
+                                        <p class="text-sm text-gray-400">進階技術</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold">¥2,999</div>
+                                    <div class="text-sm text-gray-400">$425</div>
+                                </div>
+                            </div>
+                            
+                            <div class="card p-6 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-orange-500 to-yellow-500 flex items-center justify-center text-white font-bold mr-4">
+                                        L2
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">等級2</h4>
+                                        <p class="text-sm text-gray-400">動態滑雪</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold">¥1,999</div>
+                                    <div class="text-sm text-gray-400">$285</div>
+                                </div>
+                            </div>
+                            
+                            <div class="card p-6 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-yellow-500 to-green-500 flex items-center justify-center text-white font-bold mr-4">
+                                        L3
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">等級3</h4>
+                                        <p class="text-sm text-gray-400">平行轉換</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold">¥1,299</div>
+                                    <div class="text-sm text-gray-400">$185</div>
+                                </div>
+                            </div>
+                            
+                            <div class="card p-6 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-green-500 to-blue-500 flex items-center justify-center text-white font-bold mr-4">
+                                        L4
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">等級4</h4>
+                                        <p class="text-sm text-gray-400">進階發展</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold">¥899</div>
+                                    <div class="text-sm text-gray-400">$125</div>
+                                </div>
+                            </div>
+                            
+                            <div class="card p-6 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold mr-4">
+                                        L5
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">等級5</h4>
+                                        <p class="text-sm text-gray-400">基礎建立</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-lg font-bold">¥599</div>
+                                    <div class="text-sm text-gray-400">$85</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="py-20 bg-gradient-to-b from-gray-900 to-black" id="technology">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-16 section-title center">
+                    革命性技術
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Sensor Technology -->
+                    <div class="card p-8 text-center">
+                        <div class="text-5xl mb-6">
+                            <i class="fas fa-microchip text-blue-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">先進感測器</h3>
+                        <p class="text-gray-300 mb-6">
+                            可穿戴感測器即時測量立刃角度、G力、壓力分佈和生物力學效率。
+                        </p>
+                        <ul class="text-sm text-gray-400 space-y-2">
+                            <li>• 0.1° 角度精度</li>
+                            <li>• 1000Hz 採樣率</li>
+                            <li>• IPX8 防水等級</li>
+                            <li>• 8小時電池續航</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- FPV Drone Technology -->
+                    <div class="card p-8 text-center">
+                        <div class="text-5xl mb-6">
+                            <i class="fas fa-camera text-green-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">FPV轉播技術</h3>
+                        <p class="text-gray-300 mb-6">
+                            第一人稱視角無人機捕捉沉浸式畫面，高速跟隨選手穿越挑戰性地形。
+                        </p>
+                        <ul class="text-sm text-gray-400 space-y-2">
+                            <li>• 4K UHD 錄製</li>
+                            <li>• 150 公里/小時最高速度</li>
+                            <li>• 30分鐘飛行時間</li>
+                            <li>• 5公里傳輸範圍</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- AR Graphics -->
+                    <div class="card p-8 text-center">
+                        <div class="text-5xl mb-6">
+                            <i class="fas fa-eye text-purple-400"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">AR增強實境</h3>
+                        <p class="text-gray-300 mb-6">
+                            即時增強實境疊加顯示實時性能數據，創造遊戲般的觀看體驗。
+                        </p>
+                        <ul class="text-sm text-gray-400 space-y-2">
+                            <li>• 即時速度顯示</li>
+                            <li>• 3D軌跡視覺化</li>
+                            <li>• 技術分數追蹤</li>
+                            <li>• 比較分析</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Technology Demo Video -->
+                <div class="mt-16 text-center">
+                    <div class="card p-8 max-w-4xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-6">技術實戰展示</h3>
+                        <div class="relative bg-gray-800 rounded-lg overflow-hidden" style="padding-bottom: 56.25%;">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fas fa-play-circle text-6xl text-blue-400 mb-4"></i>
+                                    <p class="text-lg">技術演示影片</p>
+                                    <p class="text-sm text-gray-400">觀看我們的感測器和AR如何協同工作</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <button class="btn-primary px-6 py-3 rounded-lg font-medium mr-4">
+                                觀看演示
+                            </button>
+                            <button class="btn-secondary px-6 py-3 rounded-lg font-medium">
+                                技術規格
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="py-20" id="partners">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-16 section-title center">
+                    全球合作夥伴
+                </h2>
+                
+                <div class="mb-16">
+                    <h3 class="text-2xl font-bold text-center mb-8 text-gray-300">全球冠名合作夥伴</h3>
+                    <div class="flex justify-center">
+                        <div class="card p-8 w-80 text-center">
+                            <div class="text-4xl mb-4">
+                                <i class="fas fa-handshake text-yellow-400"></i>
+                            </div>
+                            <h4 class="text-xl font-bold mb-2">誠徵冠名合作夥伴</h4>
+                            <p class="text-gray-400 mb-4">$6000-8000萬年投資</p>
+                            <p class="text-sm text-gray-500">錦標賽命名權和全球行銷機會</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <div class="card p-6 text-center">
+                        <h4 class="font-bold text-lg mb-4">官方全球合作夥伴</h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span>金融服務</span>
+                                <span class="text-green-400">$1500-2500萬</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>豪華汽車</span>
+                                <span class="text-green-400">$1500-2500萬</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>高端技術</span>
+                                <span class="text-green-400">$1500-2500萬</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>官方計時</span>
+                                <span class="text-green-400">$1500-2500萬</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 text-center">
+                        <h4 class="font-bold text-lg mb-4">技術合作夥伴</h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span>裝備技術</span>
+                                <span class="text-blue-400">$300-800萬</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>感測與分析</span>
+                                <span class="text-blue-400">$300-800萬</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>轉播技術</span>
+                                <span class="text-blue-400">$300-800萬</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>安全裝備</span>
+                                <span class="text-blue-400">$300-800萬</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 text-center">
+                        <h4 class="font-bold text-lg mb-4">媒體合作夥伴</h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span>ESPN (北美)</span>
+                                <span class="text-purple-400">$8000萬</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Eurosport (歐洲)</span>
+                                <span class="text-purple-400">$6000萬</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>央視體育 (中國)</span>
+                                <span class="text-purple-400">$4500萬</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>NHK (日本)</span>
+                                <span class="text-purple-400">$2500萬</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Venue Partners -->
+                <div>
+                    <h3 class="text-2xl font-bold text-center mb-8 text-gray-300">錦標賽場地</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="card p-6 text-center">
+                            <div class="bg-gray-800 w-full h-32 rounded-lg mb-4 flex items-center justify-center">
+                                <i class="fas fa-mountain text-4xl text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold">達沃斯，瑞士</h4>
+                            <p class="text-sm text-gray-400">世界錦標賽總決賽</p>
+                        </div>
+                        
+                        <div class="card p-6 text-center">
+                            <div class="bg-gray-800 w-full h-32 rounded-lg mb-4 flex items-center justify-center">
+                                <i class="fas fa-snowflake text-4xl text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold">聖莫里茨，瑞士</h4>
+                            <p class="text-sm text-gray-400">技術輪賽事</p>
+                        </div>
+                        
+                        <div class="card p-6 text-center">
+                            <div class="bg-gray-800 w-full h-32 rounded-lg mb-4 flex items-center justify-center">
+                                <i class="fas fa-tree text-4xl text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold">二世谷，日本</h4>
+                            <p class="text-sm text-gray-400">創新輪賽事</p>
+                        </div>
+                        
+                        <div class="card p-6 text-center">
+                            <div class="bg-gray-800 w-full h-32 rounded-lg mb-4 flex items-center justify-center">
+                                <i class="fas fa-flag text-4xl text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold">因斯布魯克，奧地利</h4>
+                            <p class="text-sm text-gray-400">速度輪賽事</p>
+                        </div>
+                        
+                        <div class="card p-6 text-center">
+                            <div class="bg-gray-800 w-full h-32 rounded-lg mb-4 flex items-center justify-center">
+                                <i class="fas fa-skiing text-4xl text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold">阿斯本，美國</h4>
+                            <p class="text-sm text-gray-400">風格輪賽事</p>
+                        </div>
+                        
+                        <div class="card p-6 text-center">
+                            <div class="bg-gray-800 w-full h-32 rounded-lg mb-4 flex items-center justify-center">
+                                <i class="fas fa-medal text-4xl text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold">惠斯勒，加拿大</h4>
+                            <p class="text-sm text-gray-400">冠軍輪賽事</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="py-20 bg-gradient-to-b from-gray-900 to-black" id="news">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-16 section-title center">
+                    最新消息
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- News Article 1 -->
+                    <div class="card overflow-hidden">
+                        <div class="bg-gray-800 w-full h-48 rounded-lg mb-4 flex items-center justify-center">
+                            <i class="fas fa-trophy text-5xl text-yellow-400"></i>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-sm text-blue-400 mb-2">2024年12月15日</div>
+                            <h3 class="text-xl font-bold mb-3">WSTC宣布首屆錦標賽系列賽事</h3>
+                            <p class="text-gray-300 mb-4">
+                                融合速度與技術的革命性滑雪錦標賽正式啟動，全球六個場地總獎金達1900萬美元。
+                            </p>
+                            <a href="#" class="text-blue-400 hover:text-blue-300 font-medium">
+                                閱讀更多 →
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- News Article 2 -->
+                    <div class="card overflow-hidden">
+                        <div class="bg-gray-800 w-full h-48 rounded-lg mb-4 flex items-center justify-center">
+                            <i class="fas fa-certificate text-5xl text-green-400"></i>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-sm text-blue-400 mb-2">2024年12月10日</div>
+                            <h3 class="text-xl font-bold mb-3">CSTL認證計畫開放註冊</h3>
+                            <p class="text-gray-300 mb-4">
+                                中國滑雪技術階梯(CSTL)開始接受六個技能等級的感測器滑雪認證申請。
+                            </p>
+                            <a href="#" class="text-blue-400 hover:text-blue-300 font-medium">
+                                閱讀更多 →
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- News Article 3 -->
+                    <div class="card overflow-hidden">
+                        <div class="bg-gray-800 w-full h-48 rounded-lg mb-4 flex items-center justify-center">
+                            <i class="fas fa-microchip text-5xl text-blue-400"></i>
+                        </div>
+                        <div class="p-6">
+                            <div class="text-sm text-blue-400 mb-2">2024年12月5日</div>
+                            <h3 class="text-xl font-bold mb-3">與領先感測器製造商達成技術合作</h3>
+                            <p class="text-gray-300 mb-4">
+                                WSTC宣布與先進可穿戴感測器技術獨家合作夥伴關係，提供即時生物力學分析。
+                            </p>
+                            <a href="#" class="text-blue-400 hover:text-blue-300 font-medium">
+                                閱讀更多 →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <a href="#" class="btn-primary px-8 py-3 rounded-lg font-medium">
+                        查看所有新聞
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-gradient-to-r from-blue-900 to-purple-900">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">加入WSTC革命</h2>
+                <p class="text-xl text-gray-200 mb-8">
+                    訂閱接收錦標賽賽程、CSTL認證機會以及全球最先進滑雪競賽的獨家幕後內容。
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+                    <input type="email" placeholder="輸入您的電子郵件" class="input-field rounded-full px-6 py-3 w-full">
+                    <button class="btn-primary px-8 py-3 rounded-full font-medium">
+                        訂閱
+                    </button>
+                </div>
+                <p class="text-sm text-gray-300 mt-4">
+                    訂閱即表示您同意接收行銷通訊。可隨時取消訂閱。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-black">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Brand Column -->
+                <div>
+                    <a href="#home" class="flex flex-col items-start mb-4">
+                        <div class="logo-font text-2xl">WSTC</div>
+                        <div class="logo-sub text-xs">世界滑行技術錦標賽</div>
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        通過先進技術和客觀評估革新滑雪競賽，冬季運動的一級方程式。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Championships Column -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">錦標賽</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">世界錦標賽總決賽</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">全球巡迴賽</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">大師系列賽</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">賽事日曆</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">選手與排名</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">競賽規則</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">場館資訊</a></li>
+                    </ul>
+                </div>
+                
+                <!-- CSTL & Resources Column -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">CSTL與資源</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">CSTL認證</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">訓練中心</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">線上學習</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">教練認證</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">技術指南</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">行動應用</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">支援中心</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Company & Legal Column -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">公司</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">關於WSTC</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">領導團隊</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">職涯機會</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">合作機會</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">媒體中心</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">投資者關係</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 transition">聯絡我們</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-800 mt-12 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="text-gray-500 text-sm mb-4 md:mb-0">
+                        © 2025 世界滑行技術錦標賽。保留所有權利。
+                    </div>
+                    <div class="flex space-x-6 text-sm">
+                        <a href="#" class="text-gray-500 hover:text-blue-400 transition">隱私政策</a>
+                        <a href="#" class="text-gray-500 hover:text-blue-400 transition">服務條款</a>
+                        <a href="#" class="text-gray-500 hover:text-blue-400 transition">Cookie政策</a>
+                        <a href="#" class="text-gray-500 hover:text-blue-400 transition">反興奮劑政策</a>
+                    </div>
+                </div>
+                
+                <!-- Additional Info -->
+                <div class="mt-8 pt-8 border-t border-gray-800 text-center">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-500">
+                        <div>
+                            <h4 class="font-semibold text-gray-300 mb-2">總部</h4>
+                            <p>中國北京</p>
+                            <p>全球營運中心</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-300 mb-2">錦標賽場地</h4>
+                            <p>瑞士達沃斯</p>
+                            <p>世界總決賽地點</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-300 mb-2">技術合作夥伴</h4>
+                            <p>先進感測解決方案</p>
+                            <p>即時性能分析</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="fixed bottom-8 right-8 btn-primary p-3 rounded-full opacity-0 transition-opacity duration-300 z-40">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Add random data streams
+        function createDataStreams() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const stream = document.createElement('div');
+                    stream.className = 'data-stream';
+                    stream.style.left = Math.random() * 100 + '%';
+                    stream.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(stream);
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        stream.remove();
+                    }, 4000);
+                }, i * 3000);
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start data streams
+            createDataStreams();
+            setInterval(createDataStreams, 15000);
+            
+            // Add scroll animations
+            const animatedElements = document.querySelectorAll('.animate-fade-in, .animate-slide-up, .animate-slide-right');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        if (entry.target.classList.contains('animate-slide-up')) {
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                        if (entry.target.classList.contains('animate-slide-right')) {
+                            entry.target.style.transform = 'translateX(0)';
+                        }
+                        if (entry.target.classList.contains('animate-fade-in')) {
+                            entry.target.style.transform = 'scale(1)';
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                if (el.classList.contains('animate-slide-up')) {
+                    el.style.transform = 'translateY(50px)';
+                }
+                if (el.classList.contains('animate-slide-right')) {
+                    el.style.transform = 'translateX(-50px)';
+                }
+                if (el.classList.contains('animate-fade-in')) {
+                    el.style.transform = 'scale(0.95)';
+                }
+                observer.observe(el);
+            });
+            
+            // Mobile menu functionality
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const mobileMenuClose = document.querySelector('.mobile-menu-close');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            mobileMenuClose.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Login option handlers
+            const loginOptions = document.querySelectorAll('.login-option');
+            
+            loginOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const loginType = option.getAttribute('data-login');
+                    
+                    if (loginType === 'metamask' || loginType === 'walletconnect') {
+                        alert(`正在透過${loginType.charAt(0).toUpperCase() + loginType.slice(1)}連接錢包...`);
+                    } else {
+                        alert(`正在使用${loginType.charAt(0).toUpperCase() + loginType.slice(1)}登入...`);
+                    }
+                });
+            });
+            
+            // Smooth scrolling for navigation links
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        
+                        // Close mobile menu if open
+                        mobileMenu.classList.remove('open');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+            
+            // Scroll to top functionality
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.style.opacity = '1';
+                } else {
+                    scrollToTopBtn.style.opacity = '0';
+                }
+            });
+            
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Newsletter subscription
+            const newsletterForm = document.querySelector('.newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const email = e.target.querySelector('input[type="email"]').value;
+                    alert(`感謝您使用電子郵件訂閱：${email}`);
+                    e.target.reset();
+                });
+            }
+            
+            // Competition card hover effects
+            const competitionCards = document.querySelectorAll('.competition-card');
+            competitionCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Add loading animation for demo video
+            const videoDemo = document.querySelector('.technology-demo');
+            if (videoDemo) {
+                videoDemo.addEventListener('click', () => {
+                    alert('技術演示影片即將上線！');
+                });
+            }
+            
+            // Navbar background on scroll
+            const navbar = document.querySelector('.navbar');
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 100) {
+                    navbar.style.backgroundColor = 'rgba(10, 10, 10, 0.98)';
+                } else {
+                    navbar.style.backgroundColor = 'rgba(10, 10, 10, 0.95)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
